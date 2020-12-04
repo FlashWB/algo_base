@@ -25,8 +25,6 @@ package bob.algo_week_1;
  * 2. （因为给了左右范围）二分法迭代法
  * */
 
-
-
 import java.io.BufferedInputStream;
 import java.util.Scanner;
 
@@ -35,8 +33,8 @@ public class BianrySearch {
 
         Scanner s = new Scanner(new BufferedInputStream(System.in));
         double n = s.nextDouble();
-//        binarySearch1(n, -1000, +1000);
-//        newtonSqrt(n);
+        // binarySearch1(n, -1000, +1000);
+        // newtonSqrt(n);
         newTown2(n);
     }
 
@@ -45,7 +43,7 @@ public class BianrySearch {
         double eps = 1e-6;
         while (Math.abs(r - l) > eps) {
             double mid = (l + r) / 2;
-            if (mid * mid * mid - x> 0) {
+            if (mid * mid * mid - x > 0) {
                 r = mid;
             } else {
                 l = mid;
@@ -53,7 +51,6 @@ public class BianrySearch {
         }
         System.out.printf("%.6f", l);
     }
-
 
     public static void newtonSqrt(double x0) {
         double eps = 1e-6;
@@ -65,13 +62,14 @@ public class BianrySearch {
         } while (Math.abs(x_old - x_new) > eps);
         System.out.printf("%.6f", x_new);
     }
-    public static void newTown2(double x0){
+
+    public static void newTown2(double x0) {
         double esp = 1e-6;
         double x_old = 0;
         double x_new = x0;
-        while (Math.abs(x_old-x_new) > esp){
+        while (Math.abs(x_old - x_new) > esp) {
             x_old = x_new;
-            x_new = x_old - f(x_old,x0)/fd(x_old);
+            x_new = x_old - f(x_old, x0) / fd(x_old);
         }
         System.out.println(x_new);
 
