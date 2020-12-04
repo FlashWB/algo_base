@@ -17,16 +17,18 @@ public class AddHighPricision {
         b = scanner.nextLine();
 
         List<Integer> x = Stream.iterate(0, n -> n + 1).limit(a.length())
-                .map(n -> (int)a.charAt(a.length() - 1 - n)-'0').collect(Collectors.toList());
+                .map(n -> (int) a.charAt(a.length() - 1 - n) - '0').collect(Collectors.toList());
         List<Integer> y = Stream.iterate(0, m -> m + 1).limit(b.length())
-                .map(m -> Integer.parseInt(String.valueOf(b.charAt(b.length() -m-1)))).collect(Collectors.toList());
+                .map(m -> Integer.parseInt(String.valueOf(b.charAt(b.length() - m - 1)))).collect(Collectors.toList());
 
-        System.out.println(x.toString());
-        System.out.println(y.toString());
+        // System.out.println(x.toString());
+        // System.out.println(y.toString());
 
         List<Integer> c = add(x, y);
-        Collections.reverse(c);
-        System.out.println(c);
+        int n = c.size();
+        for (int i = 1; i < n; i++) {
+            System.out.print(c.get(n - i));
+        }
 
     }
 
@@ -44,8 +46,9 @@ public class AddHighPricision {
             c.add(t % 10);
             t /= 10;
         }
-        if(t>0) c.add(t);
+        if (t > 0)
+            c.add(t);
 
-        return b;
+        return c;
     }
 }
