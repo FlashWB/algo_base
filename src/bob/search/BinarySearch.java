@@ -13,7 +13,6 @@ public class BinarySearch {
 
     }
 
-    // ���ֲ�ѯ���ݹ�д��
     public static int binarySearch(int[] arr, int l, int r, int find) {
 
         if (l > r || find < arr[0] || find > arr[arr.length - 1]) {
@@ -32,13 +31,10 @@ public class BinarySearch {
     }
 
 
-    // ���ֲ�ѯ���ǵݹ�д��
     public static int binarySearch1(int[] arr, int find) {
-        // ��ֹλ��
         int start = 0;
         int end = arr.length - 1;
         int mid;
-        // ���ֲ��ң���start=end��ʱ�򣬾��ҵ���
         while (start <= end) {
             mid = start + end >> 1;
             if (find > arr[mid]) {
@@ -49,7 +45,6 @@ public class BinarySearch {
                 return mid;
             }
         }
-        // û�ҵ�
         return -1;
     }
 

@@ -12,17 +12,13 @@ public class MergeSortTest {
 
     public static void merge(int[] arr, int[] tmpArr, int lpos, int rpos, int rEnd) {
 
-        // �����ʼλ��
         int ls = lpos;
 
-        // ��ʱ������ ��ʼλ��
         int tmppos = lpos;
         int lEnd = rpos - 1;
 
-        // �����С
         int num = rEnd - lpos + 1;
 
-        // �鲢����ʱ���飬����С����
         while (lpos <= lEnd && rpos <= rEnd) {
             if (arr[lpos] <= arr[rpos]) {
                 tmpArr[tmppos++] = arr[lpos++];
@@ -30,14 +26,12 @@ public class MergeSortTest {
                 tmpArr[tmppos++] = arr[rpos++];
             }
         }
-        // ���鲢ʣ������ʱ����
         while (lpos <= lEnd) {
             tmpArr[tmppos++] = arr[lpos++];
         }
         while (rpos <= rEnd) {
             tmpArr[tmppos++] = arr[rpos++];
         }
-        // ����ʱ���� ���Ƶ�ԭ����, ֻ��rEndû�з����仯
 //        for (int i = 0; i < num; i++, rEnd--) {
 //            arr[rEnd] = tmpArr[rEnd];
 //        }

@@ -1,13 +1,9 @@
 package bob.tree.ThreadedBinaryTree;
 
 
-/**
- * ����������
- */
 public class ThreadedBinaryTreeDemo {
 
     public static void main(String[] args) {
-        // �������
         TreeNode root = new TreeNode(1, "tom");
         TreeNode node2 = new TreeNode(3, "jack");
         TreeNode node3 = new TreeNode(6, "smith");
@@ -15,14 +11,12 @@ public class ThreadedBinaryTreeDemo {
         TreeNode node5 = new TreeNode(10, "king");
         TreeNode node6 = new TreeNode(14, "dim");
 
-        // ������
         root.setLeft(node2);
         root.setRight(node3);
         node2.setLeft(node4);
         node2.setRight(node5);
         node3.setLeft(node6);
 
-        // ����������
         ThreadedBinaryTree tree = new ThreadedBinaryTree(root);
         tree.threadedNodes();
         tree.threadedList();

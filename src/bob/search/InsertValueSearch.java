@@ -12,7 +12,6 @@ public class InsertValueSearch {
 
     }
 
-    // ��ֵ��ѯ���Ͷ��ֲ������ƣ��ǵݹ�д��
     public static int insertValueSearch(int[] arr, int find) {
         int l = 0;
         int r = arr.length - 1;
@@ -33,7 +32,6 @@ public class InsertValueSearch {
         return -1;
     }
 
-    // ��ֵ���ң��ݹ�д��
     public static int insertValueSearch(int[] arr, int l, int r, int find){
         if (l > r||find<arr[0]||find>arr[arr.length-1]) {
             return -1;

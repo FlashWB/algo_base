@@ -13,12 +13,9 @@ public class ShellSort {
         int arrLength = arr.length;
 
         int inserted;
-//        ��������飬��ʼһ��ֻ��2��Ԫ�أ���ʼ����Ϊgap,gapҲ������
         for (int gap = arrLength / 2; gap > 0; gap /= 2) {
-//            ��ÿ������в�������,���·�������
             for (int i = gap; i < arrLength; i++) {
 //                insertI(arr, gap, i)
-//                ��������Ԫ�أ��ƶ���������ȷλ��
                 for (int j = i - gap; j >= 0; j = j - gap) {
                     if (arr[j] > arr[j + gap]) {
                         inserted = arr[j];
@@ -45,19 +42,16 @@ public class ShellSort {
 
     public static void shellSort2(int[] arr) {
         int arrLengh = arr.length;
-        int gap = 1;  // ����������)
+        int gap = 1; 
 
         int insertVal ;
         int insertIndex;
 
-        // ȷ������,��������
         while (gap < arrLengh) {
             gap = gap * 3 + 1;
         }
         while (gap >= 1) {
-            // �Եڸ�����в�������,  �������򲽳�gap=1��
             for(int i =gap;i<arrLengh;i++){
-                // ��arr[i]���뵽a[i-gap],g[i-2*gap]...��������ȷλ��
                 insertVal = arr[i];
                 insertIndex = i-gap;
                 while (insertIndex>=0 && insertVal<arr[insertIndex]){
@@ -68,7 +62,6 @@ public class ShellSort {
 
             }
 
-            // ������С��ֱ��Ϊ1
             gap = (int) Math.floor(gap / 3);
         }
     }

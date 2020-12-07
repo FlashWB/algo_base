@@ -24,22 +24,12 @@ public class MergeSort {
         }
     }
 
-    /**
-     * @param tmpArray ��ʱ����
-     * @param endPos   �������
-     * @param leftPos  ��߲��ֳ�ʼλ��
-     * @param rightPos �ұ����ݳ�ʼλ��
-     * @return
-     */
     public static <T extends Comparable<? super T>> void merge
     (T[] arr, T[] tmpArray, int leftPos, int rightPos, int endPos) {
 
-        // һ����Χ�ںϲ�
         int leftEnd = rightPos - 1;
         int tmpPos = leftPos;
-        //���κϲ��ܹ�������Ԫ������
         int numElements = endPos - leftPos + 1;
-        //���й鲢
         while (leftPos <= leftEnd && rightPos <= endPos) {
             if (arr[leftPos].compareTo(arr[rightPos]) <= 0) {
                 tmpArray[tmpPos++] = arr[leftPos++];
@@ -53,7 +43,6 @@ public class MergeSort {
         while (rightPos <= endPos) {
             tmpArray[tmpPos++] = arr[rightPos++];
         }
-        // ������������ݿ�����ԭʼ���飬��ֻ��endPosû�б仯����
         for (int i = 0; i < numElements; i++, endPos--) {
             arr[endPos] = tmpArray[endPos];
         }

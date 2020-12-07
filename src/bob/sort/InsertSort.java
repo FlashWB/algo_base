@@ -10,23 +10,15 @@ public class InsertSort {
 
 
     public static void insertSort(int[] arr) {
-        // ������Ҫ�����ֵ
         int insertValue = 0;
-        // ��Ҫ���������
         int insertIndex = 0;
-        // �ӵ�һλ��ʼ����
         for (int i = 1; i < arr.length; i++) {
             insertValue = arr[i];
             insertIndex = i;
-            // ˵��:�ҳ�����λ�ã��Ӳ���ֵ��������ǰ����
-            // 1. insertIndex-1 >= 0 ��֤�ڸ�insertVal �Ҳ���λ�ã���Խ��
-            // 2. insertVal < arr[insertIndex-1] �������������û���ҵ�����λ��
-            // 3. ����Ҫ�� arr[insertIndex] ����
             while (insertIndex - 1 >= 0 && insertValue < arr[insertIndex - 1]) {
                 arr[insertIndex] = arr[insertIndex - 1];
                 insertIndex--;
             }
-            //���������ж��Ƿ���Ҫ��ֵ
             if (insertIndex != i) {
                 arr[insertIndex] = insertValue;
             }
@@ -40,7 +32,6 @@ public class InsertSort {
         for (i = 1; i < arr.length; i++) {
             insertValue = arr[i];
             for (j = i-1; j >= 0 && arr[j] > insertValue; j--) {
-                // ��������Ԫ������,�ڳ�����λ��
                     arr[j+1] = arr[j ];
             }
             arr[j+1] = insertValue;

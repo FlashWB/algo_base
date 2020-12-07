@@ -9,9 +9,7 @@ import java.util.LinkedList;
 
 public class Graph2 {
 
-    // �洢����
     private ArrayList<String> vertexList;
-    // �洢��Ӧ��������
     private int[][] edges;
     private boolean[] isvisited;
     private int numOfEdges;
@@ -87,7 +85,6 @@ public class Graph2 {
 
 
     }
-    // ��ȡ��һ���ڵ�
     public int getNextNeighbor(int v1, int v2){
         for(int j = v2; j < vertexList.size();j++){
             if(edges[v1][j]>0){
@@ -104,27 +101,23 @@ public class Graph2 {
 
 
     // -------------------------------------------------
-    // ����Ϊ��������
     public Graph2(int n) {
         edges = new int[n][n];
         isvisited = new boolean[n];
         vertexList = new ArrayList<String>(n);
     }
 
-    // vertextList�����б�  ���Ӷ���
     public void insertVertex(String vertex) {
         vertexList.add(vertex);
     }
 
 
-    // ���ӱ�
     public void insertEdge(int v1, int v2, int weight) {
         edges[v1][v2] = weight;
         edges[v2][v1] = weight;
         numOfEdges++;
     }
 
-    // ���ض�Ӧ�Ǳ�ֵ
     public String getValueByIndex(int index) {
         return vertexList.get(index);
     }

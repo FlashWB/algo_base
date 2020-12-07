@@ -6,7 +6,6 @@ import java.util.List;
 
 public class HuffmanTree {
 
-    // ǰ�����
     public void preOrder(Node root) {
         System.out.println(this);
     }
@@ -14,19 +13,15 @@ public class HuffmanTree {
 
 
     public static Node createHuffmanTree(int[] arr){
-        // ����ת����
         List<Node> nodes = new ArrayList<>();
         for(int value:arr){
             nodes.add(new Node(value));
         }
 
         while (nodes.size()>1){
-            // ��С��������
             Collections.sort(nodes);
-            // ȡ����С��2���ڵ�
             Node leftNode = nodes.get(0);
             Node rightNode = nodes.get(1);
-            // ����һ�����ڵ㣬value���ӽڵ��
             Node parent = new Node(leftNode.value+rightNode.value);
             parent.left = leftNode;
             parent.right = rightNode;
@@ -50,9 +45,8 @@ public class HuffmanTree {
 }
 
 
-// �����ڵ㣬 ʵ��Comparable�ӿ�ʵ������
 class Node implements Comparable<Node> {
-    int value;  // ���Ȩֵ
+    int value;  
     Node left;
     Node right;
 
@@ -79,7 +73,6 @@ class Node implements Comparable<Node> {
 
     @Override
     public int compareTo(Node o) {
-        // ��ʾ��С��������
         return this.value - o.value;
     }
 }

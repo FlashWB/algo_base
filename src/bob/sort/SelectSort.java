@@ -11,7 +11,6 @@ public class SelectSort {
         System.out.println();
     }
 
-    // ѡ���������δ�δ������ѡһ����С�ģ�����ǰ��
     public static void selectSort(int[] arr) {
         int minIndex = 0;
         int temp;
