@@ -1,8 +1,5 @@
 package bob.algo_week_1;
 
-import java.io.BufferedInputStream;
-import java.util.Scanner;
-
 /* 给定两个升序排序的有序数组A和B，以及一个目标值x。数组下标从0开始。
 请你求出满足A[i] + B[j] = x的数对(i, j)。
 
@@ -28,6 +25,9 @@ import java.util.Scanner;
 3 4 6 8 9
 输出样例：
 1 1 */
+import java.io.BufferedInputStream;
+import java.util.Scanner;
+
 public class SumArray {
     public static void main(String[] args) {
         Scanner scaner = new Scanner(new BufferedInputStream(System.in));
