@@ -1,4 +1,6 @@
 .vscode
 .DS_Store
+.idea
+algo_base.iml
 *.class
 
