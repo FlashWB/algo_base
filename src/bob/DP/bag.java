@@ -90,6 +90,15 @@ public class bag {
     /*
      * 动态规则解决：
      * 
+     * @param w 物品的重量数组
+     * @param v 物品的价值数组
+     * @param C 当前背包有效容量
+     * @return 最大价值
      */
+    public static int KnapSack02(int[] w, int[] v, int C) {
+
+
+        return C;
+    }
 
 }
