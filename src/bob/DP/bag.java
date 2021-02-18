@@ -12,8 +12,8 @@ public class bag {
     private static int[][] memo;
 
     public static void main(String[] args) {
-        int[] w = { 2, 1, 3, 2 };
-        int[] v = { 12, 10, 20, 15 };
+        int[] w = { 3, 2,2,1 };
+        int[] v = { 20, 12,15,10 };
         int capacity = 5;
         System.out.println(solveKS(w, v, w.length - 1, capacity));
 
@@ -23,6 +23,10 @@ public class bag {
             System.out.println(Arrays.toString(memo[i]));
         }
 
+        KnapSack02(w, v, capacity);
+        // System.out.println("KnapSack02test");
+        // KnapSack02test(w, v, capacity);
+        KnapSack03(w, v, capacity);
     }
 
     /*
@@ -91,14 +95,101 @@ public class bag {
      * 动态规则解决：
      * 
      * @param w 物品的重量数组
+     * 
      * @param v 物品的价值数组
+     * 
      * @param C 当前背包有效容量
+     * 
      * @return 最大价值
      */
     public static int KnapSack02(int[] w, int[] v, int C) {
+        int size = w.length;
+        if (size <= 0) {
+            return 0;
+        }
+        int[][] dp = new int[size][C + 1];
+        // 初始化第一行，放置第0个物品
+        for (int j = 0; j <= C; j++) {
+            dp[0][j] = w[0] <= j ? v[0] : 0;
+            System.out.print(dp[0][j] + " ");
+        }
+        System.out.println();
 
-
-        return C;
+        // 填充除每一行以外其他行
+        for (int i = 1; i < size; i++) {
+            for (int j = 0; j <= C; j++) {
+                dp[i][j] = dp[i - 1][j];
+                if (w[i] <= j) {
+                    dp[i][j] = Math.max(dp[i][j], v[i] + dp[i - 1][j - w[i]]);
+                }
+                System.out.print(dp[i][j] + " ");
+            }
+            System.out.println();
+        }
+        return dp[size - 1][C];
     }
 
+
+    public static int KnapSack02test(int[] w, int[] v, int C){
+        int size = w.length;
+        int[] dp = new int[C];
+        for(int i = 0;i<=C;i++){
+            dp[i] = w[0]<=i?w[0]:0;
+            System.out.println("");
+        }
+        for(int i = 0;i<size;i++){
+            for(int j = C;j>=w[i];j--){
+                if(w[i]<=j){
+                    dp[j] = Math.max(dp[j],v[i]+dp[j-w[i]]);
+                }
+            }
+        }
+
+
+        return dp[C];
+    }
+
+    
+
+
+
+
+    /*
+     * 动态规则解决： 只使用一维数组
+     * 
+     * @param w 物品的重量数组
+     * 
+     * @param v 物品的价值数组
+     * 
+     * @param C 当前背包有效容量
+     * 
+     * @return 最大价值
+     */
+    public static int  KnapSack03(int[] w,int[] v,int C) {
+        int size = w.length;
+        if(size == 0){
+            return 0;
+        }
+        System.out.println();
+        int[] dp = new int[C+1];
+        // 初始化数组，仅考虑放置第0个物品的情况
+        for(int i=0;i<=C;i++){
+            dp[i] = w[0] <= i ? v[0]:0;
+            System.out.print(dp[i]+" ");
+        }
+        System.out.println();
+
+        for(int i =1 ; i<size;i++){
+            for(int j = C;j >=w[i];j--){
+                dp[j]= Math.max(dp[j], v[i]+dp[j-w[i]]);
+            }
+            // 打印一行
+            for(int j = 0;j<=C;j++){
+                System.out.print(dp[j]+" ");
+            }
+            System.out.println();
+        }
+        return dp[C];
+    }
+    
 }
