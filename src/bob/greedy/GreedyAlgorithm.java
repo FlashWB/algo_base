@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.text.AbstractDocument.BranchElement;
+
 /* 
 贪心算法
 贪心策略适用的前提是：局部最优策略能导致产生全局最优解。
@@ -69,18 +71,33 @@ public class GreedyAlgorithm {
 
     }
 
-    public static <T> void greedy2(HashMap<T, HashSet<T>> broadcasts, HashSet<T> allAreas) {
-        int maxRetain = 0; // 电台与剩余城市交集最大
-        T key = null;  // 电台与剩余城市交集最大的key
-        HashSet<T> tempSet = new HashSet<>();
+    public static <T> int greedy2(HashMap<T, HashSet<T>> broadcasts, HashSet<T> allAreas) {
+
+        // 目标：覆盖所有城市,allAreas为空
+        // 未被覆盖的城市 HashSet<T> allAreas
+        // 子问题：每次覆盖最多(电台与剩余城市交集最大)的城市
+        HashSet<T> tempUnion = new HashSet<>(); // 当前电台与剩余交集
+        HashSet<T> maxUnionCast = new HashSet<>(); // 存储最大交集的电台
+        T maxKey = null; // 最大交集的key
+        int maxUnion = 0;
         while (!allAreas.isEmpty()) {
-            for (Map.Entry<T, HashSet<T>> bc : broadcasts.entrySet()) {
-                tempSet = bc.getValue();
-                tempSet
-                if((!tempSet.isEmpty())&&temp )
+            maxKey = null;
+            maxUnion = 0;
+            for (Map.Entry<T, HashSet<T>> broadcast : broadcasts.entrySet()) {
+                tempUnion.clear();
+                tempUnion = broadcast.getValue();
+                if(tempUnion.retainAll(allAreas)){
+                    if((!tempUnion.isEmpty()) && tempUnion.size()>maxUnion){
+                        maxKey = broadcast.getKey();
+                    }
+                }
+            }
+            if(maxKey!=null){
+                maxUnionCast.add(broadcasts.get(maxKey));
             }
         }
-        System.out.println();
+
+        return 0;
     }
 
     public static <T> int greedy1(HashMap<T, HashSet<T>> broadcasts, HashSet<T> allAreas) {
