@@ -85,17 +85,20 @@ public class GreedyAlgorithm {
             maxUnion = 0;
             for (Map.Entry<T, HashSet<T>> broadcast : broadcasts.entrySet()) {
                 tempUnion.clear();
-                tempUnion = broadcast.getValue();
-                if(tempUnion.retainAll(allAreas)){
-                    if((!tempUnion.isEmpty()) && tempUnion.size()>maxUnion){
-                        maxKey = broadcast.getKey();
-                    }
+                tempUnion.addAll(broadcast.getValue());
+                tempUnion.retainAll(allAreas);
+                if ((!tempUnion.isEmpty()) && tempUnion.size() > maxUnion) {
+                    maxKey = broadcast.getKey();
+                    maxUnion = tempUnion.size();
                 }
             }
-            if(maxKey!=null){
-                maxUnionCast.add(broadcasts.get(maxKey));
+            if (maxKey != null) {
+                maxUnionCast.add(maxKey);
+                allAreas.removeAll(broadcasts.get(maxKey));
+                broadcasts.remove(maxKey);
             }
         }
+        System.out.println(maxUnionCast.toString());
 
         return 0;
     }
