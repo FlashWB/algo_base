@@ -21,27 +21,29 @@ https://zhuanlan.zhihu.com/p/93647900/
 P行，每行一个’Yes’或’No’。表示第i个询问的答案为“具有”或“不具有”亲戚关系。
 
  */
-public class UnionFIndSets {
+public class UnionFindSets {
     int MAXN = 10;
-    int[] fa;
+    int[] par; // 假如有编号为1, 2, 3, ..., n的n个元素，用数组par[]存储元素的父节点，每个元素有且只有一个父节点
 
     public static void main(String[] args) {
-
+        System.out.println();
     }
 
-    public UnionFIndSets(int n) {
-        fa = new int[n];
+    public UnionFindSets(int n) {
+        par = new int[n];
         for (int i = 1; i <= n; ++i) {
-            fa[i] = i;
+            par[i] = i;
         }
     }
 
+    // 查找树的根,一层一层访问父节点，直至根节点
     public int find(int x) {
-        return fa[x] == x  ? x : (fa[x] = find(fa[x]));
+        // 压缩路径 par[x] = find(par[x])
+        return  par[x] == x  ? x : (par[x] = find(par[x]));
     }
 
     public void merge(int i, int j){
-        fa[find(i)] = find(j);
+        par[find(i)] = find(j);
     }
 
 }
