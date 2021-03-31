@@ -44,12 +44,22 @@ public class dijkstraDemo {
 
     }
 
-    public static int[] dijkstra(int[][] matrix, ) {
+    public static int[] dijkstra(char[] vertex, int[][] matrix ) {
+        int size = vertex.length;
+        int[] already_arr = new int[size]; // 每次选出的最短路径节点
+        int[] pre_visited = new int[size]; // 记录每个节点前驱节点
+        int[] dis = new int[size]; // 到各个顶点的最短路径
 
+        
+
+        return dis;
     }
 
 }
 
+class VisitedVertex{
+    
+}
 class Edge {
     int x;
     int y;
