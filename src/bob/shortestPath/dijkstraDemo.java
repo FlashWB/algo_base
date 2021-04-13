@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.text.html.MinimalHTMLWriter;
+
 /* 
 https://my.oschina.net/u/4678692/blog/4654834  
 
@@ -28,7 +30,6 @@ public class dijkstraDemo {
     public static void main(String[] args) {
         char[] vertex = { 'A', 'B', 'C', 'D', 'E', 'F', 'G' }; // 邻接矩阵
         int[][] matrix = new int[vertex.length][vertex.length];
-        List<Edge> shortestList = new ArrayList<>();
         matrix[0] = new int[] { MAXLEN, 5, 7, MAXLEN, MAXLEN, MAXLEN, 2 };
         matrix[1] = new int[] { 5, MAXLEN, MAXLEN, 9, MAXLEN, MAXLEN, 3 };
         matrix[2] = new int[] { 7, MAXLEN, MAXLEN, MAXLEN, 8, MAXLEN, MAXLEN };
@@ -42,36 +43,100 @@ public class dijkstraDemo {
             System.out.println(Arrays.toString(matrix[i]));
         }
 
-    }
+        VisitedVertex visitedVertex = new VisitedVertex(vertex, matrix);
+        visitedVertex.dijkstra(2);
 
-    public static int[] dijkstra(char[] vertex, int[][] matrix ) {
-        int size = vertex.length;
-        int[] already_arr = new int[size]; // 每次选出的最短路径节点
-        int[] pre_visited = new int[size]; // 记录每个节点前驱节点
-        int[] dis = new int[size]; // 到各个顶点的最短路径
+        System.out.println("最短路径：");
+        System.out.println(Arrays.toString(visitedVertex.dis));
 
-        
-
-        return dis;
     }
 
 }
 
-class VisitedVertex{
-    
-}
-class Edge {
-    int x;
-    int y;
-    int weight;
+class VisitedVertex {
 
-    public Edge(int x, int y, int weight) {
-        this.x = x;
-        this.y = y;
-        this.weight = weight;
+    int[] alreadyArr; // 每次选出的最短路径节点
+    int[] preVisited; // 记录每个节点前驱节点
+    int[] dis; // 到各个顶点的最短路径
+    int[][] graph;
+    char[] vertex;
+    int size;
+
+    public VisitedVertex(char[] vertex, int[][] matrix) {
+        size = vertex.length;
+        alreadyArr = new int[size]; // 每次选出的最短路径节点
+        preVisited = new int[size]; // 记录每个节点前驱节点
+        dis = new int[size]; // 到各个顶点的最短路径
+        for (int i = 0; i < size; i++) {
+            dis[i] = Integer.MAX_VALUE;
+        }
+        graph = matrix;
+        this.vertex = vertex;
     }
 
-    public String toString() {
-        return "<" + this.x + "," + this.y + ">=" + this.weight;
+    /**
+     * 从index点出发，到其他点距离最小
+     * 
+     * @param index
+     */
+    public void dijkstra(int index) {
+        dis[index] = 0;
+        alreadyArr[index] = 1;
+        // updatePreDis(index); // 更新出发点的距离和前驱顶点
+        for (int i = 1; i < size; i++) {
+            // index = updateVisited(index);
+          index =  updatePreDis(index);
+        }
+
     }
+
+    /**
+     * 更新index顶点到周围顶点的距离dis和前驱节点preVisited
+     * 
+     * @param index
+     */
+    public int updatePreDis(int index) {
+        int len = Integer.MAX_VALUE; // 记录出发点
+        int minLen = Integer.MAX_VALUE; // 记录最小路径
+        int minLenIndex = index; // 记录最小路径的终点
+        alreadyArr[index] = 1;
+        for (int i = 0; i < graph[index].length; i++) {
+            if (graph[index][i] == Integer.MAX_VALUE || alreadyArr[i] == 1) {
+                continue;
+            }
+            len = dis[index] + graph[index][i];
+            if (len < dis[i]) {
+                preVisited[i] = index; // 更新i顶点前驱节点
+                dis[i] = len; // 更新i节点，从起点到终点的距离
+            }
+            if(len<minLen){
+                minLen = len;
+                minLenIndex = i;
+            }
+        }
+        return minLenIndex;
+    }
+
+    /**
+     * 从访问过的节点中，选出最短路径，并标识
+     * 
+     * @param index
+     */
+    public int updateVisited(int index) {
+        int minDis = Integer.MAX_VALUE;
+        int minIndex = 0;
+        for (int i = 0; i < size; i++) {
+            if (alreadyArr[i] == 0 && dis[i] < minDis) {
+                minDis = dis[i];
+                minIndex = i;
+            }
+        }
+        // 选出最短路径并标识
+        alreadyArr[minIndex] = 1;
+        return minIndex;
+    }
+
+    public void showShortDis(int start, int end) {
+    }
+
 }
