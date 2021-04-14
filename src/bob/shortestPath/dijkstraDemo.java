@@ -1,11 +1,6 @@
 package bob.shortestPath;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.text.html.MinimalHTMLWriter;
-
 /* 
 https://my.oschina.net/u/4678692/blog/4654834  
 
@@ -48,6 +43,8 @@ public class dijkstraDemo {
 
         System.out.println("最短路径：");
         System.out.println(Arrays.toString(visitedVertex.dis));
+        System.out.println(Arrays.toString(visitedVertex.preVisited));
+       visitedVertex.showShortDis(2, 3);
 
     }
 
@@ -69,6 +66,7 @@ class VisitedVertex {
         dis = new int[size]; // 到各个顶点的最短路径
         for (int i = 0; i < size; i++) {
             dis[i] = Integer.MAX_VALUE;
+            preVisited[i] = Integer.MAX_VALUE;
         }
         graph = matrix;
         this.vertex = vertex;
@@ -109,34 +107,28 @@ class VisitedVertex {
                 preVisited[i] = index; // 更新i顶点前驱节点
                 dis[i] = len; // 更新i节点，从起点到终点的距离
             }
-            if(len<minLen){
-                minLen = len;
+            if(dis[i]<minLen){
+                minLen = dis[i];
                 minLenIndex = i;
             }
         }
         return minLenIndex;
     }
 
-    /**
-     * 从访问过的节点中，选出最短路径，并标识
-     * 
-     * @param index
-     */
-    public int updateVisited(int index) {
-        int minDis = Integer.MAX_VALUE;
-        int minIndex = 0;
-        for (int i = 0; i < size; i++) {
-            if (alreadyArr[i] == 0 && dis[i] < minDis) {
-                minDis = dis[i];
-                minIndex = i;
-            }
-        }
-        // 选出最短路径并标识
-        alreadyArr[minIndex] = 1;
-        return minIndex;
-    }
 
-    public void showShortDis(int start, int end) {
+    public void showShortDis( int start,int end) {
+        int[] arr = new int[size];
+        int index = end;
+        int i = 0;
+        arr[i] = index;
+        while(index!=start){
+            i++;
+            index = preVisited[index];
+            arr[i] = index;
+        }
+        for(int j= 0 ; j<=i;j++){
+            System.out.print(arr[i-j]+" ");
+        }
     }
 
 }
