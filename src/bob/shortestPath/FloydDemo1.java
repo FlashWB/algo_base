@@ -1,5 +1,7 @@
 package bob.shortestPath;
 
+import java.util.Arrays;
+
 /* 
 Floyd算法是一种动态规划算法，稠密图效果最佳，边权可正可负。此算法简单有效，由于三重循环结构紧凑，对于稠密图，效率要高于执行|V|次Dijkstra算法。
 
@@ -24,16 +26,60 @@ public class FloydDemo1 {
         matrix[4] = new int[] { N, N, 8, N, 0, 5, 4 };
         matrix[5] = new int[] { N, N, N, 4, 5, 0, 6 };
         matrix[6] = new int[] { 2, 3, N, N, 4, 6, 0 };
+
+        FloydAlg f = new FloydAlg(vertex, matrix);
+        f.floyd();
+        f.show();
     }
 
 }
 
-class FloydAlg{
+class FloydAlg {
+    int length;
     char[] vertex;
     int[][] dis; // 顶点到其他点的距离
-    int[][] pre;  // 前驱节点
+    int[][] pre; // 前驱节点
 
+    public FloydAlg(char[] vertex, int[][] matrix) {
+        this.dis = matrix;
+        this.vertex = vertex;
+        this.length = vertex.length;
+        pre = new int[length][length];
+        for (int i = 0; i < length; i++) {
+            Arrays.fill(pre[i], i);
+        }
+    }
 
+    public void floyd() {
+        int len = 0;
+        for (int k = 0; k < length; k++) {
+            for (int i = 0; i < length; i++) {
+                for (int j = 0; j < length; j++) {
+                    len = dis[i][k] + dis[k][j];
+                    if (len < dis[i][j]) {
+                        dis[i][j] = len;
+                        pre[i][j] = pre[k][j];
+                    }
 
+                }
+            }
+        }
+    }
+
+    public void show() {
+        for (int k = 0; k < dis.length; k++) {
+            // 先将 pre 数组输出的一行
+            for (int i = 0; i < dis.length; i++) {
+                System.out.print(vertex[pre[k][i]] + " ");
+            }
+            System.out.println();
+            // 输出 dis 数组的一行数据
+            for (int i = 0; i < dis.length; i++) {
+                System.out.print("(" + vertex[k] + "到" + vertex[i] + "的最短路径是" + dis[k][i] + ") ");
+            }
+            System.out.println();
+            System.out.println();
+        }
+    }
 
 }
