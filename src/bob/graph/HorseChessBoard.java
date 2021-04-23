@@ -2,6 +2,8 @@ package bob.graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.awt.Point;
 
@@ -14,20 +16,20 @@ public class HorseChessBoard {
 
     public static void main(String[] args) {
 
-        X = 8;
-        Y = 8;
+        X = 7;
+        Y = 7;
         int row = 4;
         int column = 4;
         isVisited = new boolean[X * Y];
         finished = false;
         int[][] chessBoard = new int[X][Y];
         long start = System.currentTimeMillis();
-        travel(chessBoard, row, column, 1);
-        long end= System.currentTimeMillis();
+        testHorseTravel(chessBoard, row, column, 1);
+        long end = System.currentTimeMillis();
         for (int i = 0; i < Y; i++) {
             System.out.println(Arrays.toString(chessBoard[i]));
         }
-        System.out.println(end - start);
+        System.out.println(end - start + "ms");
 
     }
 
@@ -41,8 +43,8 @@ public class HorseChessBoard {
     public static void travel(int[][] chessArr, int x, int y, int step) {
         isVisited[x + y * X] = true; // 标记访问
         chessArr[x][y] = step;
-        ArrayList<Point> ps = nextPoints(new Point(x, y));
-        sortPointSize(ps);
+        List<Point> ps = nextPoints(new Point(x, y)).stream().sorted(Comparator.comparing(e -> nextPoints(e).size()))
+                .collect(Collectors.toList());
         while (!ps.isEmpty()) {
             Point p = ps.remove(0);
             if (!isVisited[p.y * X + p.x]) {
@@ -50,12 +52,35 @@ public class HorseChessBoard {
             }
         }
         // 棋盘仍未走完，回溯，恢复致上一个状态
-        if (!finished && step < X * Y) {
+        if (!finished && step < X * Y) { //  如果finished，则回溯所有stack
             chessArr[x][y] = 0;
-            isVisited[x + y * X] = false; // 标记访问
+            isVisited[x + y * X] = false;
         } else {
             finished = true;
         }
+    }
+
+    public static void testHorseTravel(int[][] chessBoard, int x, int y, int step) {
+        isVisited[y * X + x] = true;
+        chessBoard[x][y] = step;
+        List<Point> ps = nextPoints(new Point(x, y)).stream().sorted(Comparator.comparing(e -> nextPoints(e).size()))
+                .collect(Collectors.toList());
+        while (!ps.isEmpty()) {
+            Point p = ps.remove(0);
+            if(!isVisited[p.y*X+p.x]){
+            testHorseTravel(chessBoard, p.x, p.y, step + 1);
+            }
+        }
+        if(finished){
+            return;
+        }
+        if (step < X * Y) { // 回溯
+            isVisited[y * X + x] = false;
+            chessBoard[x][y]= 0;
+        } else {
+            finished = true;
+        }
+
     }
 
     /* 判断下一步能走的点 */
@@ -95,14 +120,6 @@ public class HorseChessBoard {
             pList.add(new Point(p));
         }
         return pList;
-    }
-
-    public static void sortPointSize(ArrayList<Point> ps) {
-       ps =   (ArrayList<Point>) ps.stream().sorted((ps1, ps2) -> {
-            int x = nextPoints(ps1).size();
-            int y = nextPoints(ps2).size();
-            return x - y > 0 ? 1 : (x - y == 0 ? 0 : -1);
-        }).collect(Collectors.toList());
     }
 
 }
