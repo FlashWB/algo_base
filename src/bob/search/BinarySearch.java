@@ -1,5 +1,7 @@
 package bob.search;
 
+import java.util.List;
+
 public class BinarySearch {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
@@ -67,13 +69,20 @@ public class BinarySearch {
         return -1;
     }
 
-
-    /**
-     * �������飬�����ظ���ֵ
-     * �ҵ��������ظ�ֵ����������
-     */
-    public static int binarySearch(int[] arr, int findVal) {
-        return -1;
+    public static int binarySearch(int x, List<Integer> list) {
+        int l = 0, r = list.size() - 1;
+        while(l<r){
+            int mid = l+r>>1;
+            if(list.get(mid) < x){
+                l = mid+1;
+            }else{
+                r=mid;
+            }
+        }
+        if(list.get(l)==x){
+        return l;
+        }else{
+            return -1;
+        }
     }
-
 }
