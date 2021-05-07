@@ -44,27 +44,33 @@ public class Count1 {
         for (int i = 0; i < n; i++) {
             a[i] = s.nextInt();
         }
-    // 方法1：每次去掉最后一位
+        // // 方法1：每次去掉最后一位
         // for (int i = 0; i < n; i++) {
-        // System.out.print(countByte(a[i]) + " ");
+        //     int res = 0;
+        //     for (int j = a[i]; j > 0; j &= (j - 1)) {
+        //         res++;
+        //     }
+        //     System.out.print(res + " ");
         // }
-    // 方法2：每次保留最后一位  n & -n
+        // // 方法2：每次保留最后一位 n & -n
+        // for (int i = 0; i < n; i++) {
+        //     int res = 0;
+        //     for (int j = a[i]; j > 0; j -= j & -j) {
+        //         res++;
+        //     }
+        //     System.out.print(res + " ");
+        // }
+        // 方法3：向右移位，
         for (int i = 0; i < n; i++) {
             int res = 0;
-            for (int j= a[i]; j > 0; j -= j & -j) {
-                res++;
+            for (int j = a[i]; j > 0; j >>= 1) {
+                if (j << 1 == a[i]) {
+                    res++;
+                }
             }
-            System.out.print(res+" ");
+            System.out.print(res + " ");
         }
         System.out.println();
     }
 
-    public static int countByte(int n) {
-        int res = 0;
-        while (n > 0) {
-            n = n & (n - 1);
-            res++;
-        }
-        return res;
-    }
 }
