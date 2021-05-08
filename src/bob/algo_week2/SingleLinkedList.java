@@ -1,4 +1,8 @@
 package bob.algo_week2;
+
+import java.io.BufferedInputStream;
+import java.util.*;
+
 /* 
 实现一个单链表，链表初始为空，支持三种操作：
 
@@ -39,45 +43,78 @@ D 6
 输出样例：
 6 4 6 5
 */
-public class SingleLinkedList{
+public class SingleLinkedList {
 
     // 通过数组的索引关联
     public static int[] e; // 元素值
     public static int[] ne; // 当前元素下一个元素的索引
     public static int idx; // 当前索引
-    public  static int head; // 头节点指针
-
-
+    public static int head; // 头节点指针
 
     public static void main(String[] args) {
-        
+        Scanner s = new Scanner(new BufferedInputStream(System.in));
+        int m = s.nextInt();
+        init();
+        while (m-- > 0) {
+            String a = s.next();
+            int x;
+            int k;
+            switch (a) {
+            case "H":
+                x = s.nextInt();
+                addToHead(x);
+                break;
+            case "D":
+                k = s.nextInt();
+                if (k == 0) {
+                    head = ne[head];
+                } else {
+                    remove(k-1);
+                }
+                break;
+            case "I":
+                k = s.nextInt();
+                x = s.nextInt();
+                add(k-1, x);
+                break;
+            default:
+                break;
+            }
+        }
+
+        // 单链表只能从头节点遍历
+        for(int i =head;i!=-1 ;i = ne[i]){
+            System.out.print(e[i]+" ");
+        }
     }
 
-    public static void init(){
+    public static void init() {
         head = -1;
         idx = 0;
+        int n = 100010;
+        e = new int[n];
+        ne = new int[n];
     }
 
     // 在头节点添加一个元素
-    public static void addToHead(int x){
+    public static void addToHead(int x) {
         e[idx] = x;
-        ne[idx]= head;
+        ne[idx] = head;
         head = idx;
         idx++;
     }
 
     // 在第k个位置添加一个元素x
-    public static void add(int k, int x){
+    public static void add(int k, int x) {
         e[idx] = x;
         ne[idx] = ne[k];
         ne[k] = idx;
         idx++;
     }
 
-    // 删除第k+1的节点
-    public static void remove(int k){
+    // 删除第k个数后面的一个数
+    public static void remove(int k) {
         ne[k] = ne[ne[k]];
     }
-
 
 }
