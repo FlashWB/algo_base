@@ -1,5 +1,8 @@
 package bob.algo_week2;
 
+import java.util.*;
+import java.io.*;
+
 /* 
 滑动窗口协议（Sliding Window Protocol）
 TCP协议的一种，允许发送方在停止并等待确认前发送多个数据分组，发送方不必每发一个分组就停下来，用于网络数据传输流量控制，避免拥塞。
@@ -49,8 +52,35 @@ TCP协议的一种，允许发送方在停止并等待确认前发送多个数�
 */
 
 public class SlidingWindow {
+    static int N = 1000010;
+    static int[] a = new int[N];
+    static int[] q = new int[N]; // 单调队列，存储a的下标
+    static int n;
+    static int k; // 区间长度
+
     public static void main(String[] args) {
-        
+        Scanner s = new Scanner(new BufferedInputStream(System.in));
+        n = s.nextInt();
+        k = s.nextInt();
+        for (int i = 0; i < n; i++) {
+            a[i] = s.nextInt();
+        }
+
+        int hh = 0, tt = -1;
+        // i是单调队列的右端点，当前访问的点
+        for (int i = 0; i < n; i++) {
+            // i-k+1 窗口的左端点,q中存储的是a的下标，下标小于窗口左端点的需要弹出
+            if (hh <= tt && i - k + 1 > q[hh]) {
+                hh++;
+            }
+            while (hh <= tt && a[q[tt]] >= a[i])
+                tt--;
+            q[++tt] = i;
+            if (i + 1 >= k) {
+                System.out.print(a[q[hh]] + " ");
+            }
+        }
+
     }
-    
+
 }
