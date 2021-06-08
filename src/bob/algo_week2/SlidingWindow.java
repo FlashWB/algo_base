@@ -54,33 +54,57 @@ TCP协议的一种，允许发送方在停止并等待确认前发送多个数�
 public class SlidingWindow {
     static int N = 1000010;
     static int[] a = new int[N];
-    static int[] q = new int[N]; // 单调队列，存储a的下标
+    static int[] q = new int[N]; // 单调队列，存储a的下标 ,单调队列，由小至大。
     static int n;
     static int k; // 区间长度
 
     public static void main(String[] args) {
         Scanner s = new Scanner(new BufferedInputStream(System.in));
+        PrintWriter p = new PrintWriter(System.out);
         n = s.nextInt();
         k = s.nextInt();
         for (int i = 0; i < n; i++) {
             a[i] = s.nextInt();
         }
 
+        // 队列的开头结尾,tt 是表示当前队列存储所用到位置，而q[ tt ]存储的是数组中元素的下标
         int hh = 0, tt = -1;
         // i是单调队列的右端点，当前访问的点
         for (int i = 0; i < n; i++) {
             // i-k+1 窗口的左端点,q中存储的是a的下标，下标小于窗口左端点的需要弹出
-            if (hh <= tt && i - k + 1 > q[hh]) {
+            if (hh <= tt && q[hh] < i - k + 1) {
                 hh++;
             }
+            // hh<=tt 防止队列全空的情况,
+            // 队列中只存不大于当前元素的值。队列尾部比当前元素大，则减掉队列尾部
             while (hh <= tt && a[q[tt]] >= a[i])
                 tt--;
             q[++tt] = i;
+            // 窗口满后
             if (i + 1 >= k) {
-                System.out.print(a[q[hh]] + " ");
+                // 如果没有更小的，则一直输出单调队列头元素
+                p.print(a[q[hh]] + " ");
             }
         }
 
+        p.println("");
+        hh = 0;
+        tt = -1;
+        for (int i = 0; i < n; i++) {
+            if (hh <= tt && q[hh] < i - k + 1) {
+                hh++;
+            }
+            // 队列只存储比当前元素大的，比当前元素小的都从队尾删除掉
+            while (hh <= tt && a[q[tt]] < a[i]) {
+                tt--;
+            }
+            q[++tt] = i;
+            if (i + 1 >= k) {
+                p.print(a[q[hh]] + " ");
+            }
+        }
+        // 
+        p.close();
     }
 
 }
